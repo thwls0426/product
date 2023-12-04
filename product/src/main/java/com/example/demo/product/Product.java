@@ -1,10 +1,12 @@
 package com.example.demo.product;
 
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Map;
 
 @Entity
 @Getter
@@ -30,7 +32,13 @@ public class Product {
     // ** 가격
     private int price;
 
-
-
-
+    @Builder
+    public Product(Long id, String productName, String description, String image, int price) {
+        this.id = id;
+        this.productName = productName;
+        this.description = description;
+        this.image = image;
+        this.price = price;
+    }
+    
 }
