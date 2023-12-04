@@ -59,4 +59,13 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
+    @Transactional
+    public void update(ProductResponse.FindAllDTO findAllDTO){
+        Optional<Product> optionalProduct = productRepository.findById(findAllDTO.getId());
+
+        optionalProduct.ifPresent(product -> {
+            product.update(findAllDTO);
+        });
+    }
+
 }

@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 public class ProductResponse {
 
     @Data
+    @NoArgsConstructor
     public static class FindAllDTO{
 
         // ** PK
@@ -47,6 +48,7 @@ public class ProductResponse {
 
 
     @Data
+    @NoArgsConstructor
     public static class FindByIdDTO{
 
         // ** PK
@@ -85,6 +87,7 @@ public class ProductResponse {
 
     // 밑은 option 클래스 안의 entity 애들
     @Data
+    @NoArgsConstructor
     public static class OptionDTO{
         private Long id;
         private String optionName;

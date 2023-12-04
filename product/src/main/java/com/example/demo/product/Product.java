@@ -40,5 +40,12 @@ public class Product {
         this.image = image;
         this.price = price;
     }
-    
+
+    public void update(ProductResponse.FindAllDTO updateDTO){
+        this.productName = updateDTO.getProductName();
+        this.description = updateDTO.getDescription();
+        this.image = updateDTO.getImage();
+        this.price = updateDTO.getPrice();
+    }
+
 }
