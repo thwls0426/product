@@ -9,7 +9,10 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Entity
-@Table(name = "option_tb")
+@Table(name = "option_tb",
+        indexes = {
+            @Index(name = "option_product_id_index", columnList = "product_id")
+}) //그냥 option으로하면 동일하게 사용되는 테이블이 있어서 tb붙여서 사용
 public class Option {
 
     @Id

@@ -8,6 +8,11 @@ import java.util.stream.Collectors;
 
 //얘가 DTO
 
+
+/* 리팩토링
+*  : 비슷한 코드가 두번이상 사용되는 경우 메서드화 == 모듈화
+*
+* 같은 product 라고하더라도, dto는 꼭 한개가 아니어도 괜찮다*/
 @Data
 @ToString
 @NoArgsConstructor
@@ -36,7 +41,7 @@ public class ProductResponse {
         // 쌤이 생각하기에는 이거 오류임.
 //    private int quantity; (남은수량으로 사용하고자 했지만 이건 option 에서 쓸거니까 여기서 뺌)
 
-        public FindAllDTO(Product product) {
+        public FindAllDTO(Product product) { //얘가 builder
             //원래 괄호 안에 Long id, String productName, String description, String image, int price, int quantity 있었음
             this.id = product.getId();
             this.productName = product.getProductName();
