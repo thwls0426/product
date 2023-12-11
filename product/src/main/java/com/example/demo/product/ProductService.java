@@ -82,4 +82,9 @@ public class ProductService {
         });
     }
 
+    @Transactional
+    public Product save(Product product) {
+        Product saveProduct = productRepository.save(product);
+        return saveProduct;
+    }
 }

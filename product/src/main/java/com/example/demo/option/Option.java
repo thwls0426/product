@@ -1,6 +1,8 @@
 package com.example.demo.option;
 
+import com.example.demo.order.OrderResponse;
 import com.example.demo.product.Product;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -32,5 +34,20 @@ public class Option {
 
     // ** 옵션 상품 수량
     private Long quantity;
+    
+    @Builder
+    public Option(Long id, Product product, String optionName, Long price, Long quantity) {
+        this.id = id;
+        this.product = product;
+        this.optionName = optionName;
+        this.price = price;
+        this.quantity = quantity;
+    }
 
+    public void update(OptionResponse.FindAllDTO updateDTO){
+        this.id = updateDTO.getId();
+        this.optionName = updateDTO.getOptionName();
+        this.price = updateDTO.getPrice();
+        this.quantity = updateDTO.getQuantity();
+    }
 }

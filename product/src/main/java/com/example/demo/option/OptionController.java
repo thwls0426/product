@@ -42,10 +42,18 @@ public class OptionController {
         return ResponseEntity.ok(apiResult);
     }
 
-//    @PutMapping("/update/{id}/options")
-//    public ResponseEntity<?> update(@RequestBody OptionResponse.FindAllDTO findAllDTO){
-//        optionService.update(findAllDTO);
-//        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(null);
-//        return ResponseEntity.ok(apiResult);
-//    }
+    @GetMapping("/update/{id}/options")
+    public ResponseEntity<?> update(@RequestBody OptionResponse.FindAllDTO optionResponse){
+        Option update = optionService.update(optionResponse);
+        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(update);
+        return ResponseEntity.ok(apiResult);
+    }
+
+    @PostMapping("/save/{id}/options")
+    public ResponseEntity<?> save(@RequestBody Option option){
+        Option save = optionService.save(option);
+        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(save);
+        return ResponseEntity.ok(apiResult);
+    }
+
 }

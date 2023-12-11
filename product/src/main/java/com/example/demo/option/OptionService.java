@@ -1,9 +1,8 @@
 package com.example.demo.option;
 
-import com.example.demo.product.Product;
-import com.example.demo.product.ProductResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,6 +10,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class OptionService {
     private final OptionRepository optionRepository;
 
@@ -32,15 +32,24 @@ public class OptionService {
         return findAllDTOS;
     }
 
+    @Transactional
     public void delete(Long id) {
         optionRepository.deleteById(id);
     }
 
-//    public void update(ProductResponse.OptionDTO optionDTO) {
-//        List<Option> optionalProduct = optionRepository.findByProductId(optionDTO.getId());
-//
-//        optionalProduct.ifPresent
-//        optionRepository.save(optionDTO);
-//
-//    }
+    @Transactional
+    public Option save(Option option) {
+       Option saveOption = optionRepository.save(option);
+       return saveOption;
+    }
+
+    @Transactional
+    public Option update(OptionResponse.FindAllDTO findAllDTO){
+        Optional<Option> optionalProduct = optionRepository.findById(findAllDTO.getId());
+
+        optionalProduct.ifPresent(option -> {
+            option.update(findAllDTO);
+        });
+        return null;
+    }
 }

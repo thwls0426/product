@@ -25,14 +25,14 @@ public class UserRequest {
         @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@#$%^&+=!~`<>,./?;:'\"\\[\\]{}\\\\()|_-])\\S*$", message = "영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.")
         private String password;
 
-        @NotEmpty
-        private String username;
 
-        private String provider;
-
-        @NotEmpty
-        @Pattern(regexp = "^[0-9]{10,11}$", message = "휴대폰 번호는 숫자 10~11자리만 가능합니다.")
-        private String phoneNumber;
+//        private String username;
+//
+//        private String provider;
+//
+//
+//        @Pattern(regexp = "^[0-9]{10,11}$", message = "휴대폰 번호는 숫자 10~11자리만 가능합니다.")
+//        private String phoneNumber;
 
 
 //        @Builder
@@ -47,10 +47,10 @@ public class UserRequest {
 //        }
 
         @Builder
-        public User toEntity(PasswordEncoder passwordEncoder) {
+        public User toEntity() {
             return User.builder()
                     .email(email)
-                    .password(passwordEncoder.encode(password))
+                    .password(password)
                     .roles(Collections.singletonList("ROLE_USER"))
                     .build();
         }

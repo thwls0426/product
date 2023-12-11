@@ -18,11 +18,11 @@ public class Product {
     private Long id;
 
     // ** 상품명, 입력값 필수
-    @Column(length = 100, nullable = false)
+    @Column(length = 100)
     private String productName;
 
     // ** 상품설명, 입력값 필수
-    @Column(length = 500, nullable = false)
+    @Column(length = 500)
     private String description;
 
     // ** 이미지 정보
@@ -30,6 +30,7 @@ public class Product {
     private String image;
 
     // ** 가격
+    @Column(length = 100)
     private int price;
 
     @Builder
@@ -47,5 +48,6 @@ public class Product {
         this.image = updateDTO.getImage();
         this.price = updateDTO.getPrice();
     }
+
 
 }

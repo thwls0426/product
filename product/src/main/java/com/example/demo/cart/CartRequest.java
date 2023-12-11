@@ -10,7 +10,7 @@ public class CartRequest {
         private Long optionId;
         private Long quantity;
 
-        public Cart toEntity(Option option, User user) {
+        public Cart toEntity(Option option, User user) { // 유저정보는 항상, 단, 인증이 되었을 경우. (인증정보 때문)
             return Cart.builder()
                     .option(option)
                     .quantity(quantity)

@@ -11,16 +11,19 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
+@Transactional(readOnly = true)
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
+    @Transactional
     public void join(UserRequest.JoinDTO joinDTO) {
 
         Optional<User> byEmail = userRepository.findByEmail(joinDTO.getEmail());
@@ -34,24 +37,29 @@ public class UserService {
         String encodedPassword = passwordEncoder.encode(joinDTO.getPassword());
         joinDTO.setPassword(encodedPassword);
 
-        userRepository.save(joinDTO.toEntity(passwordEncoder));
+        userRepository.save(joinDTO.toEntity());
     }
 
+    @Transactional
     public String login(UserRequest.JoinDTO requestDTO) {
         // ** 인증 작업.
-        try {
+        try { //이렇게 만든 토큰을 발급
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
                     = new UsernamePasswordAuthenticationToken(requestDTO.getEmail(), requestDTO.getPassword());
 
+            String encodePassword = passwordEncoder.encode("Password@888");
+            System.out.println(encodePassword);
+
+            // ** anonymousUser = 비인증
             Authentication authentication = authenticationManager.authenticate(
                     usernamePasswordAuthenticationToken
             );
-
             // ** 인증 완료 값을 받아온다.
             CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
 
             // ** 토큰 발급.
             return JwtTokenProvider.create(customUserDetails.getUser());
+
 
         } catch (Exception e) {
             // 401 반환.

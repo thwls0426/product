@@ -48,7 +48,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
             DecodedJWT decodedJWT = JwtTokenProvider.verify(jwt);
 
             // ** 사용자 정보 추출.
-            Long id = decodedJWT.getClaim("id").asLong(); // Long 으로 사용하기 때문에 기존 int > long
+            Long id = decodedJWT.getClaim("id").asLong();
             String roles = decodedJWT.getClaim("roles").asString();
 
             // ** 권한 정보를 문자열 리스트로 변환.
