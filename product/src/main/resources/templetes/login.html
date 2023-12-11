@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #333333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            color: white;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .login-container {
+            background: #555;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            width: 300px;
+            max-width: 80%; /* 최대 너비 설정 */
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* 블록 간격 설정 */
+        }
+
+        label {
+            font-size: 16px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 16px;
+            width: calc(100% - 20px);
+            margin-bottom: 10px; /* 간격을 조절 */
+            box-sizing: border-box;
+        }
+
+
+        button {
+            padding: 10px;
+            font-size: 16px;
+            color: white;
+            background: #4CAF50;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="login-container">
+    <label for="username">아이디:</label>
+    <input type="text" id="username" name="username">
+
+    <label for="password">비밀번호:</label>
+    <input type="password" id="password" name="password">
+
+    <button onclick="login()">로그인</button>
+</div>
+
+<script>
+    const login = () => {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        if (username === "your_username" && password === "your_password") {
+            location.href = "/";
+        } else {
+            alert("아이디 또는 비밀번호가 일치하지 않습니다.");
+        }
+    };
+</script>
+
+</body>
+
+</html>

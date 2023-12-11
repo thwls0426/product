@@ -50,4 +50,11 @@ public class ProductController {
         return ResponseEntity.ok(apiResult);
     }
 
+    @PostMapping("/save")
+    public ResponseEntity<?> save(@RequestBody Product product){
+        Product save = productService.save(product);
+        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(save);
+        return ResponseEntity.ok(apiResult);
+    }
+
 }

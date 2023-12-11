@@ -23,6 +23,10 @@ spring:
       enabled: ALWAYS
 
   jpa:
+    properties:
+      hibernate:
+        hbm2ddl:
+          import_files: classpath:db/data.sql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     open-in-view: false
     show-sql: true

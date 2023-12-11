@@ -1,6 +1,8 @@
 package com.example.demo.option;
 
+import com.example.demo.order.OrderResponse;
 import com.example.demo.product.Product;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,7 +11,10 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Entity
-@Table(name = "option_tb")
+@Table(name = "option_tb",
+        indexes = {
+            @Index(name = "option_product_id_index", columnList = "product_id")
+}) //그냥 option으로하면 동일하게 사용되는 테이블이 있어서 tb붙여서 사용
 public class Option {
 
     @Id
@@ -29,5 +34,20 @@ public class Option {
 
     // ** 옵션 상품 수량
     private Long quantity;
+    
+    @Builder
+    public Option(Long id, Product product, String optionName, Long price, Long quantity) {
+        this.id = id;
+        this.product = product;
+        this.optionName = optionName;
+        this.price = price;
+        this.quantity = quantity;
+    }
 
+    public void update(OptionResponse.FindAllDTO updateDTO){
+        this.id = updateDTO.getId();
+        this.optionName = updateDTO.getOptionName();
+        this.price = updateDTO.getPrice();
+        this.quantity = updateDTO.getQuantity();
+    }
 }
