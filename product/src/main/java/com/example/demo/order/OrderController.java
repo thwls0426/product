@@ -30,12 +30,12 @@ public class OrderController {
 
     }
 
-    @PutMapping("/orders/{id}/update")
-    public ResponseEntity<?> update(@RequestBody OrderResponse.FindByIdDTO optionResponse){
-        OrderResponse.FindByIdDTO update = orderService.update(optionResponse);
-        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(update);
-        return ResponseEntity.ok(apiResult);
-    }
+//    @PutMapping("/orders/{id}/update")
+//    public ResponseEntity<?> update(@RequestBody OrderResponse.FindByIdDTO optionResponse){
+//        OrderResponse.FindByIdDTO update = orderService.update(optionResponse);
+//        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(update);
+//        return ResponseEntity.ok(apiResult);
+//    }
 
 
     // ** 삭제

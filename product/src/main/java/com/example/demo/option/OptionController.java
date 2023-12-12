@@ -49,9 +49,9 @@ public class OptionController {
         return ResponseEntity.ok(apiResult);
     }
 
-    @PostMapping("/save/{id}/options")
-    public ResponseEntity<?> save(@RequestBody Option option){
-        Option save = optionService.save(option);
+    @PostMapping("/save/options")
+    public ResponseEntity<?> save(@RequestBody OptionRequest.saveDTO saveDTO){
+        Option save = optionService.save(saveDTO);
         ApiUtils.ApiResult<?> apiResult = ApiUtils.success(save);
         return ResponseEntity.ok(apiResult);
     }

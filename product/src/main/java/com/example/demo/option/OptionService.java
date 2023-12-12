@@ -1,5 +1,7 @@
 package com.example.demo.option;
 
+import com.example.demo.product.Product;
+import com.example.demo.product.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +15,7 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class OptionService {
     private final OptionRepository optionRepository;
+    private final ProductRepository productRepository;
 
     //좀잇다 변경해야함
     public List<OptionResponse.FindByProductIdDTO> findByProductId(Long id) {
@@ -37,11 +40,7 @@ public class OptionService {
         optionRepository.deleteById(id);
     }
 
-    @Transactional
-    public Option save(Option option) {
-       Option saveOption = optionRepository.save(option);
-       return saveOption;
-    }
+
 
     @Transactional
     public Option update(OptionResponse.FindAllDTO findAllDTO){
@@ -51,5 +50,21 @@ public class OptionService {
             option.update(findAllDTO);
         });
         return null;
+    }
+
+    @Transactional
+    public Option save(OptionRequest.saveDTO optionDTO) {
+
+        Optional<Product> optionalOption = productRepository.findById(optionDTO.getProductId());
+
+        if (optionalOption.isPresent()) {
+            Product product = optionalOption.get();
+
+            Option entity = optionDTO.toEntity(product);
+
+            return optionRepository.save(entity);
+        } else {
+            throw new IllegalArgumentException("해당 ID에 대한 Option을 찾을 수 없습니다. ID: " );
+        }
     }
 }

@@ -78,42 +78,42 @@ public class OrderService {
         }
     }
 
-    @Transactional
-    public OrderResponse.FindByIdDTO update(OrderResponse.FindByIdDTO orderResponse) {
-        Long orderId = orderResponse.getId();
-
-        // 주문을 찾아옴
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new Exception404("해당 주문 내역을 찾을 수 없습니다: " + orderId));
-
-        // 여기에서 필요한 업데이트 로직을 수행
-        // 예를 들어, 주문의 상태를 변경하거나 다른 필드를 업데이트할 수 있습니다.
-        // order.setStatus(orderResponse.getStatus());
-        // order.setSomeField(orderResponse.getSomeField());
-
-        // Item 업데이트
-        List<Item> updatedItems = new ArrayList<>();
-
-        for (OrderResponse.FindByIdDTO.ProductDTO productDTO : orderResponse.getProductDTOS()) {
-            for (OrderResponse.FindByIdDTO.ProductDTO.ItemDTO itemDTO : productDTO.getItemDTOS()) {
-                Item item = itemRepository.findById(itemDTO.getId())
-                        .orElseThrow(() -> new Exception404("해당 아이템을 찾을 수 없습니다: " + itemDTO.getId()));
-
-                // 여기에서 필요한 Item 업데이트 로직을 수행
-                // 예를 들어, item.setQuantity(itemDTO.getQuantity());
-                // item.setPrice(itemDTO.getPrice());
-
-                updatedItems.add(item);
-            }
-        }
-
-        // 업데이트된 Item 저장
-        try {
-            itemRepository.saveAll(updatedItems);
-        } catch (Exception e) {
-            throw new Exception500("주문 업데이트 중 오류 발생: " + e.getMessage());
-        }
-
-        return new OrderResponse.FindByIdDTO(order, updatedItems);
-    }
+//    @Transactional
+//    public OrderResponse.FindByIdDTO update(OrderResponse.FindByIdDTO orderResponse) {
+//        Long orderId = orderResponse.getId();
+//
+//        // 주문을 찾아옴
+//        Order order = orderRepository.findById(orderId)
+//                .orElseThrow(() -> new Exception404("해당 주문 내역을 찾을 수 없습니다: " + orderId));
+//
+//        // 여기에서 필요한 업데이트 로직을 수행
+//        // 예를 들어, 주문의 상태를 변경하거나 다른 필드를 업데이트할 수 있습니다.
+//        // order.setStatus(orderResponse.getStatus());
+//        // order.setSomeField(orderResponse.getSomeField());
+//
+//        // Item 업데이트
+//        List<Item> updatedItems = new ArrayList<>();
+//
+//        for (OrderResponse.FindByIdDTO.ProductDTO productDTO : orderResponse.getProductDTOS()) {
+//            for (OrderResponse.FindByIdDTO.ProductDTO.ItemDTO itemDTO : productDTO.getItemDTOS()) {
+//                Item item = itemRepository.findById(itemDTO.getId())
+//                        .orElseThrow(() -> new Exception404("해당 아이템을 찾을 수 없습니다: " + itemDTO.getId()));
+//
+//                // 여기에서 필요한 Item 업데이트 로직을 수행
+//                // 예를 들어, item.setQuantity(itemDTO.getQuantity());
+//                // item.setPrice(itemDTO.getPrice());
+//
+//                updatedItems.add(item);
+//            }
+//        }
+//
+//        // 업데이트된 Item 저장
+//        try {
+//            itemRepository.saveAll(updatedItems);
+//        } catch (Exception e) {
+//            throw new Exception500("주문 업데이트 중 오류 발생: " + e.getMessage());
+//        }
+//
+//        return new OrderResponse.FindByIdDTO(order, updatedItems);
+//    }
 }

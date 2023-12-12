@@ -65,33 +65,32 @@ public class CartService {
 
     @Transactional
     public CartResponse.UpdateDTO update(List<CartRequest.UpdateDTO> requestDTO, User user) {
-        // 카트안에 있는 모든 정보를 가져옴
+
+        // 카트에 있는 모든 정보를 가져옴
         List<Cart> cartList = cartRepository.findAllByUserId(user.getId());
 
-        // 카트 안에 있는 키를 확인. (옵션정보를 확인하기 위함)  pk 들고와
-        List<Long> cartIds = cartList.stream().map(cart -> cart.getId()).collect(Collectors.toList()); //카트 pk만 받아올거
-
-        //DTO.카트아이디를 list 형태로 들고옴, pk 들고와
+        List<Long> cartIds = cartList.stream().map(cart -> cart.getId()).collect(Collectors.toList());
         List<Long> requestIds = requestDTO.stream().map(dto -> dto.getCartId()).collect(Collectors.toList());
 
-        if(cartIds.size() == 0){
-            throw new Exception404("주문 가능한 상품이 없습니다."); //페이지는 들어갔지만 페이지에 출력할 데이터 x
+        if (cartIds.size() == 0) { // 자료가 없음
+            throw new Exception404("주문 가능한 상품이 없습니다.");
         }
-        if(requestIds.size() != new HashSet<>(requestIds).size()){
-            throw new Exception400("동일한 제품을 주문할 수 없습니다");
-        }
-        for(Long requestId : requestIds){
-            if(!cartIds.contains(requestId)) //requestIds 뒤져보면서 카트에 담긴 아이디 찾음
-            {
-                throw new Exception400("카트에 없는 상품은 주문할 수 없습니다" + requestId/*없는상품 코드*/); //데이터업서
 
+        // distinct() = 동일한 키는 제거 ex) 1, 1, 3, 3, 4 -> 3개
+        if (requestIds.stream().distinct().count() != requestIds.size()) {
+            throw new Exception400("동일한 카트 아이디를 주문할 수 없습니다.");
+        }
+
+        for (Long requestId : requestIds) {
+            if (!cartIds.contains(requestId)) {
+                throw new Exception400("카트에 없는 상품은 주문할 수 없습니다." + requestId);
             }
         }
-        //모든 예외처리가 완료됐다면,
-        for(CartRequest.UpdateDTO updateDTO : requestDTO){
-            for(Cart cart : cartList){
-                if(cart.getId() == updateDTO.getCartId()){
-                    cart.update(updateDTO.getQuantity(), cart.getPrice() * cart.getQuantity());
+
+        for (CartRequest.UpdateDTO updateDTO : requestDTO) {
+            for (Cart cart : cartList) {
+                if (cart.getId() == updateDTO.getCartId()) {
+                    cart.update(updateDTO.getQuantity(), cart.getOption().getPrice() * updateDTO.getQuantity());
                 }
             }
         }
