@@ -27,7 +27,7 @@ public class CartResponse { //응답
         public UpdateDTO(List<Cart> dtoList) {
             this.dtoList = dtoList.stream().map(CartDTO::new).collect(Collectors.toList());
 
-            this.totalPrice = totalPrice; //업데이트에 대한 응답
+            this.totalPrice = getTotalPrice(); //업데이트에 대한 응답
         }
 
         @Data
